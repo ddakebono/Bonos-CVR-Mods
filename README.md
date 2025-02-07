@@ -29,7 +29,7 @@ mklink /j Mods "C:\Program Files (x86)\Steam\steamapps\common\ChilloutVR\Mods"
 
 ### Building
 
-You can build
+You can build the main solution, this will compile and slap the final mod assemblies into the output folder.
 
 ## Install/Usage
 Install [MelonLoader](https://github.com/HerpDerpinstine/MelonLoader) version 0.6.1 or higher, this is required as the mod has been updated specifically for 0.6.1!
