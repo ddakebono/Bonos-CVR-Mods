@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfModNormalizationFix", "SelfModNormalizationFix\SelfModNormalizationFix.csproj", "{D73EF13B-D949-40E0-800D-C8289B0E0167}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieNightRedirect", "MovieNightRedirect\MovieNightRedirect.csproj", "{B259FB67-BD33-4BB6-AEB4-FE8AF4DB7D90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D73EF13B-D949-40E0-800D-C8289B0E0167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73EF13B-D949-40E0-800D-C8289B0E0167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73EF13B-D949-40E0-800D-C8289B0E0167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73EF13B-D949-40E0-800D-C8289B0E0167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B259FB67-BD33-4BB6-AEB4-FE8AF4DB7D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B259FB67-BD33-4BB6-AEB4-FE8AF4DB7D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B259FB67-BD33-4BB6-AEB4-FE8AF4DB7D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B259FB67-BD33-4BB6-AEB4-FE8AF4DB7D90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
