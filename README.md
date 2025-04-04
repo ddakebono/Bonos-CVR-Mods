@@ -4,8 +4,8 @@ This repo acts as a hideaway for some smaller mods that have no need for a stand
 Some mods in here require [BTKUILib](https://github.com/BTK-Development/BTKUILib) to function!
 
 ## Current Things
-- Self Moderation Normalization Fix
-    - Fixes a bug with SelfModerationManager that causes voice normalization to be disable in most cases
+- ~~Self Moderation Normalization Fix~~ - Fixed natively
+    - ~~Fixes a bug with SelfModerationManager that causes voice normalization to be disable in most cases~~
 - Movie Night Redirect
     - This mod is primarily in use for my movie night, but it can be used in other places too, see readme for usage!
 

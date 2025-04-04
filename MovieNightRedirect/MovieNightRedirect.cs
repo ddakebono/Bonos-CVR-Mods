@@ -24,7 +24,7 @@ namespace MovieNightRedirect
         public const string Name = "MovieNightRedirect";
         public const string Author = "DDAkebono";
         public const string Company = "BTKDevelopment";
-        public const string Version = "1.2.1";
+        public const string Version = "1.2.2";
     }
     
     public class MovieNightRedirect : MelonMod
@@ -210,9 +210,13 @@ namespace MovieNightRedirect
                 LastInstance = __instance;
                 LastUrl = url;
 
-                if (url.StartsWith("http://bmn-res-od.potato.moe/vrc"))
+                if (url.StartsWith("https://bmn-res.potato.moe/gd"))
                 {
-                    path = url.Replace("http://bmn-res-od.potato.moe/vrc", MovieNightRedirect.RedirectMNToFolder);
+                    path = url.Replace("https://bmn-res.potato.moe/gd", MovieNightRedirect.RedirectMNToFolder);
+                }
+                else if (url.StartsWith("https://bmn-res.potato.moe/local"))
+                {
+                    path = url.Replace("https://bmn-res.potato.moe/local", MovieNightRedirect.RedirectMNToFolder);
                 }
                 else if (url.StartsWith("https://cdn.malthbern.com/Personal/Movies"))
                 {
