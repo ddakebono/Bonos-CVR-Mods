@@ -247,6 +247,11 @@ namespace MovieNightRedirect
                     MovieNightRedirect.Toggle3DMode(false);
                 }
 
+                if (File.Exists(Uri.UnescapeDataString(path)))
+                {
+                    path = Uri.UnescapeDataString(path);
+                }
+
                 if (File.Exists(path))
                 {
                     MovieNightRedirect.Log.Msg($"Found local movie night file for {path}! Replacing online link!");
