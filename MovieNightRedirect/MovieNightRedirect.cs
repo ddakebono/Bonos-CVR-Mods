@@ -24,7 +24,7 @@ namespace MovieNightRedirect
         public const string Name = "MovieNightRedirect";
         public const string Author = "DDAkebono";
         public const string Company = "BTKDevelopment";
-        public const string Version = "1.2.2";
+        public const string Version = "1.2.3";
     }
     
     public class MovieNightRedirect : MelonMod
