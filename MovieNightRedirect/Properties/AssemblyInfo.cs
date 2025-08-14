@@ -35,5 +35,5 @@ using MelonLoader;
 [assembly: AssemblyVersion("1.2.2.0")]
 [assembly: AssemblyFileVersion("1.2.2.0")]
 [assembly: MelonInfo(typeof(MovieNightRedirect.MovieNightRedirect), MovieNightRedirect.BuildInfo.Name, MovieNightRedirect.BuildInfo.Version, MovieNightRedirect.BuildInfo.Author)]
-[assembly: MelonGame("Alpha Blend Interactive", "ChilloutVR")]
+[assembly: MelonGame("ChilloutVR", "ChilloutVR")]
 [assembly: HarmonyDontPatchAll]
