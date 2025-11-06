@@ -11,6 +11,7 @@ using ABI_RC.Core.UI;
 using ABI_RC.Systems.GameEventSystem;
 using ABI_RC.VideoPlayer.Scripts.Players.AvPro;
 using BTKUILib;
+using BTKUILib.UIObjects;
 using BTKUILib.UIObjects.Components;
 using HarmonyLib;
 using MelonLoader;
@@ -39,6 +40,8 @@ namespace MovieNightRedirect
         private static HttpClient _client;
         private static string _currentOriginalMovieURL;
         private static string _current3DMovieURL;
+        private static Category _movieNightCat;
+        private static ToggleButton _3dToggle;
 
         public override void OnInitializeMelon()
         {
@@ -52,9 +55,13 @@ namespace MovieNightRedirect
             }
 
             //Setup Misc UI
-            var movieNightCat = QuickMenuAPI.MiscTabPage.AddCategory("Movie Night");
-            Try3DSource = movieNightCat.AddToggle("Try 3D Source", "Enabling this will set Movie Night to look for a 3D version of the movie source!", false);
+            _movieNightCat = QuickMenuAPI.MiscTabPage.AddCategory("Movie Night");
+            Try3DSource = _movieNightCat.AddToggle("Try 3D Source", "Enabling this will set Movie Night to look for a 3D version of the movie source!", false);
             Try3DSource.OnValueUpdated += Toggle3DSearch;
+
+            _3dToggle = _movieNightCat.AddToggle("Enable 3D Mode",
+                "Forcefully change the 3D mode if this world supports it", false);
+            _3dToggle.OnValueUpdated += Toggle3DMode;
             
             Log.Msg("Setting up Movie Night Redirect!");
             
@@ -75,8 +82,14 @@ namespace MovieNightRedirect
 
         public static void Toggle3DMode(bool sbsMode)
         {
-            if (!_is3DModeReady) return;
+            if (!_is3DModeReady)
+            {
+                _3dToggle.ToggleValue = false;
+                return;
+            }
 
+            _3dToggle.ToggleValue = sbsMode;
+            
             _3dScreen.SetActive(sbsMode);
             _2dScreen.SetActive(!sbsMode);
         }
@@ -112,6 +125,7 @@ namespace MovieNightRedirect
                 AvProPlayerPatch.LastInstance.SetUrl(_current3DMovieURL);
                 Toggle3DMode(true);
                 Log.Msg("Current 3D URL is the same, firing SetUrl without checking!");
+                yield break;
             }
 
             _currentOriginalMovieURL = AvProPlayerPatch.LastUrl;
@@ -128,6 +142,7 @@ namespace MovieNightRedirect
             if (sourceCheck.Result.StatusCode == HttpStatusCode.OK)
             {
                 Log.Msg("3D Source Detected! Replacing URL for player!");
+                _movieNightCat.CategoryName = "Movie Night - 3D Ready!";
                 var newUrl = AvProPlayerPatch.LastUrl.Replace(".mp4", "3D.mp4");
                 _current3DMovieURL = newUrl;
                 AvProPlayerPatch.LastInstance.SetUrl(newUrl);
@@ -136,6 +151,7 @@ namespace MovieNightRedirect
             else
             {
                 Log.Msg("No 3D source detected");
+                _movieNightCat.CategoryName = "Movie Night - No 3D...";
                 Toggle3DMode(false);
             }
         }
@@ -143,6 +159,9 @@ namespace MovieNightRedirect
         private void OnInstanceConnected(string _)
         {
             _is3DModeReady = false;
+            _3dToggle.ToggleValue = false;
+
+            _movieNightCat.CategoryName = "Movie Night";
 
             GameObject check3d = GameObject.Find("3DReadyNight");
 
