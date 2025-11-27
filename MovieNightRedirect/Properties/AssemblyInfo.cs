@@ -32,8 +32,8 @@ using MelonLoader;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.5.0")]
-[assembly: AssemblyFileVersion("1.2.5.0")]
+[assembly: AssemblyVersion("1.2.6.0")]
+[assembly: AssemblyFileVersion("1.2.6.0")]
 [assembly: MelonInfo(typeof(MovieNightRedirect.MovieNightRedirect), MovieNightRedirect.BuildInfo.Name, MovieNightRedirect.BuildInfo.Version, MovieNightRedirect.BuildInfo.Author)]
 [assembly: MelonGame("ChilloutVR", "ChilloutVR")]
 [assembly: HarmonyDontPatchAll]

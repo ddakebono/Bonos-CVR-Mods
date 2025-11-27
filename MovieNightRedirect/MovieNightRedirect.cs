@@ -25,7 +25,7 @@ namespace MovieNightRedirect
         public const string Name = "MovieNightRedirect";
         public const string Author = "DDAkebono";
         public const string Company = "BTKDevelopment";
-        public const string Version = "1.2.5";
+        public const string Version = "1.2.6";
     }
     
     public class MovieNightRedirect : MelonMod
@@ -38,8 +38,8 @@ namespace MovieNightRedirect
         private static GameObject _2dScreen;
         public static ToggleButton Try3DSource;
         private static HttpClient _client;
-        private static string _currentOriginalMovieURL;
-        private static string _current3DMovieURL;
+        public static string CurrentOriginalMovieURL;
+        public static string Current3DMovieURL;
         private static Category _movieNightCat;
         private static ToggleButton _3dToggle;
 
@@ -104,8 +104,8 @@ namespace MovieNightRedirect
             }
             else
             {
-                if(!string.IsNullOrWhiteSpace(_currentOriginalMovieURL))
-                    AvProPlayerPatch.LastInstance.SetUrl(_currentOriginalMovieURL);
+                if(!string.IsNullOrWhiteSpace(CurrentOriginalMovieURL))
+                    AvProPlayerPatch.LastInstance.SetUrl(CurrentOriginalMovieURL);
                 Toggle3DMode(false);
             }
         }
@@ -119,16 +119,7 @@ namespace MovieNightRedirect
                 _client.DefaultRequestHeaders.Add("User-Agent", "MovieNightRedirect");
             }
 
-            if (AvProPlayerPatch.LastUrl.Equals(_currentOriginalMovieURL, StringComparison.InvariantCultureIgnoreCase) ||
-                AvProPlayerPatch.LastUrl.Equals(_current3DMovieURL, StringComparison.InvariantCultureIgnoreCase))
-            {
-                AvProPlayerPatch.LastInstance.SetUrl(_current3DMovieURL);
-                Toggle3DMode(true);
-                Log.Msg("Current 3D URL is the same, firing SetUrl without checking!");
-                yield break;
-            }
-
-            _currentOriginalMovieURL = AvProPlayerPatch.LastUrl;
+            CurrentOriginalMovieURL = AvProPlayerPatch.LastUrl;
 
             Log.Msg("Checking for 3D source....");
 
@@ -144,7 +135,7 @@ namespace MovieNightRedirect
                 Log.Msg("3D Source Detected! Replacing URL for player!");
                 _movieNightCat.CategoryName = "Movie Night - 3D Ready!";
                 var newUrl = AvProPlayerPatch.LastUrl.Replace(".mp4", "3D.mp4");
-                _current3DMovieURL = newUrl;
+                Current3DMovieURL = newUrl;
                 AvProPlayerPatch.LastInstance.SetUrl(newUrl);
                 Toggle3DMode(true);
             }
@@ -229,6 +220,16 @@ namespace MovieNightRedirect
                 LastInstance = __instance;
                 LastUrl = url;
 
+                if (MovieNightRedirect.Try3DSource.ToggleValue)
+                {
+                    if (LastUrl.Equals(MovieNightRedirect.CurrentOriginalMovieURL, StringComparison.InvariantCultureIgnoreCase) && MovieNightRedirect.Current3DMovieURL != null)
+                    {
+                        MovieNightRedirect.Log.Msg($"Current 3D URL is the same, setting URL to current 3d movie URL! 3d {MovieNightRedirect.Current3DMovieURL} | orig {MovieNightRedirect.CurrentOriginalMovieURL}");
+                        url = MovieNightRedirect.Current3DMovieURL;
+                        MovieNightRedirect.Toggle3DMode(true);
+                    }
+                }
+
                 if (url.StartsWith("https://bmn-res.potato.moe/gd"))
                 {
                     path = url.Replace("https://bmn-res.potato.moe/gd", MovieNightRedirect.RedirectMNToFolder);
@@ -254,15 +255,16 @@ namespace MovieNightRedirect
                     }
                 }
 
-
-                if (MovieNightRedirect.Try3DSource.ToggleValue && !url.EndsWith("3D.mp4"))
+                if (MovieNightRedirect.Try3DSource.ToggleValue && !path.EndsWith("3D.mp4"))
                 {
                     //Start the search coroutine
+                    MovieNightRedirect.Log.Msg($"Starting 3d movie search for {url}...");
                     MelonCoroutines.Start(MovieNightRedirect.MovieSearchCoroutine());
                 }
 
                 if (!MovieNightRedirect.Try3DSource.ToggleValue)
                 {
+                    MovieNightRedirect.Log.Msg("Resetting 3D state to false");
                     MovieNightRedirect.Toggle3DMode(false);
                 }
 
@@ -296,7 +298,7 @@ namespace MovieNightRedirect
             {
                 MovieNightRedirect.Log.Error(e);
             }
-
+            
             return true;
         }
     }
