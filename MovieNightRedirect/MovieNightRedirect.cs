@@ -25,7 +25,7 @@ namespace MovieNightRedirect
         public const string Name = "MovieNightRedirect";
         public const string Author = "DDAkebono";
         public const string Company = "BTKDevelopment";
-        public const string Version = "1.2.6";
+        public const string Version = "1.2.7";
     }
     
     public class MovieNightRedirect : MelonMod
@@ -156,7 +156,7 @@ namespace MovieNightRedirect
 
             GameObject check3d = GameObject.Find("3DReadyNight");
 
-            if (!check3d.activeSelf) return;
+            if (!check3d || !check3d.activeSelf) return;
 
             Log.Msg("Found 3D Ready Flag! Grabbing gameobjects and preparing!");
 
